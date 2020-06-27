@@ -1,4 +1,4 @@
 {
-    "editor.cursorStyle": "block",
+    "editor.cursorStyle": "line",
     "editor.renderWhitespace": "none"
 }

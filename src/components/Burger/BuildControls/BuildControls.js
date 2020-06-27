@@ -12,6 +12,7 @@ const control = [
 export default function BuildControls(props) {
     return (
         <div className={classes.BuildControls}>
+            <p>Total Price: <strong>{props.priceAmount}</strong></p>
             {control.map(con => (
                 <BuildControl
                     key={con.label}
@@ -22,6 +23,7 @@ export default function BuildControls(props) {
                     type={con.type}
                 />
             ))}
+            <button className={classes.OrderButton} disabled={!props.purchaseable}>ORDER NOW</button>
         </div>
     )
 }
