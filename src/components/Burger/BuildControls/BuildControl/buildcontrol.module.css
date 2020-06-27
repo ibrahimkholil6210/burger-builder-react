@@ -30,8 +30,10 @@
 
 .Label {
     padding: 10px;
-    font-weight: bold;
+    font-weight: 700;
     width: 80px;
+    color: #ffffff;
+    text-transform: uppercase;
 }
 
 .BuildControl .Less {  

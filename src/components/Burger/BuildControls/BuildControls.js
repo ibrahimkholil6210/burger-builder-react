@@ -13,7 +13,14 @@ export default function BuildControls(props) {
     return (
         <div className={classes.BuildControls}>
             {control.map(con => (
-                <BuildControl key={con.label} label={con.label} addHandler={() => props.addIngredient(con.type)} />
+                <BuildControl
+                    key={con.label}
+                    label={con.label}
+                    addHandler={() => props.addIngredient(con.type)}
+                    decreaseHandler={() => props.decreaseIngredient(con.type)}
+                    disabledDetermine={props.disabled}
+                    type={con.type}
+                />
             ))}
         </div>
     )

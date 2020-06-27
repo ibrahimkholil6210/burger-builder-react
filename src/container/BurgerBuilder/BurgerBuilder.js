@@ -23,7 +23,6 @@ export default class BurgerBuilder extends Component {
     }
 
     addIngredientHandler = (type) => {
-        console.log(type)
         const updatedIngredients = {
             ...this.state.ingredients,
             [type]: this.state.ingredients[type] + 1
@@ -31,14 +30,27 @@ export default class BurgerBuilder extends Component {
         const pricing = this.totalPrice + INGREDIENTS_PRICE[type];
 
         this.setState({ ingredients: updatedIngredients, totalPrice: pricing });
-        console.log(this.state)
+    }
+
+    decreaseIngredientHandler = (type) => {
+        const updatedIngredients = {
+            ...this.state.ingredients,
+            [type]: this.state.ingredients[type] - 1
+        };
+        const pricing = this.totalPrice - INGREDIENTS_PRICE[type];
+
+        this.setState({ ingredients: updatedIngredients, totalPrice: pricing });
     }
 
     render() {
         return (
             <Aux>
                 <Burger ingredients={this.state.ingredients} />
-                <BurgerControls addIngredient={this.addIngredientHandler} />
+                <BurgerControls
+                    addIngredient={this.addIngredientHandler}
+                    decreaseIngredient={this.decreaseIngredientHandler}
+                    disabled={this.state.ingredients}
+                />
             </Aux>
         )
     }
