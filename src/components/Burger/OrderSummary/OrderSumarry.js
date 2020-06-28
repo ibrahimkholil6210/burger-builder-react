@@ -17,7 +17,7 @@ export default function OrderSumarry(props) {
             <ul className={classes.IngredientsUL}>
                 {ingredientsList}
             </ul>
-            <p>Total Price: {props.totalPrice}</p>
+            <p><strong>Total Price:</strong> {props.totalPrice}</p>
             <p>Procced to checkout?</p>
             <Button btnType="Danger" clicked={props.closeHandler}>Close</Button>
             <Button btnType="Success" clicked={props.parchaseContinueHandler}>Continue</Button>
