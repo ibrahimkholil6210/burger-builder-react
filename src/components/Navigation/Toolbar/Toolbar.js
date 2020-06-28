@@ -5,7 +5,7 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 
 export default function Toolbar(props) {
     return (
-        <header className={classes.Toolbar}>
+        <header className={[classes.Toolbar, classes.DesktopOnly].join(' ')}>
             <div>Menu</div>
             <Logo />
             <nav>
