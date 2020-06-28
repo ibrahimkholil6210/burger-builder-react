@@ -17,7 +17,7 @@
 }
 
 .Modal.show{
-    transform: translateY(0px);
+    transform: translateY(0);
 }
 
 @media (min-width: 600px) {
