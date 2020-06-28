@@ -17,6 +17,7 @@ export default function OrderSumarry(props) {
                 {ingredientsList}
             </ul>
             <p>Procced to checkout?</p>
+            <button className={classes.CloseButton} onClick={props.closeHandler}>Close</button>
         </Aux>
     )
 }
