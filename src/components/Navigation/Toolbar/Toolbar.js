@@ -5,10 +5,10 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 
 export default function Toolbar(props) {
     return (
-        <header className={[classes.Toolbar, classes.DesktopOnly].join(' ')}>
+        <header className={classes.Toolbar}>
             <div>Menu</div>
             <Logo />
-            <nav>
+            <nav className={[classes.DesktopOnly].join(' ')}>
                 <NavigationItems />
             </nav>
         </header>
