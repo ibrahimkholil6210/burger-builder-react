@@ -24,3 +24,9 @@
     font-weight: bold;
     font-size: 17px;
 }
+
+@media (max-width: 500px) {
+    .IngredientListSpan{
+        flex-basis: 28%;
+    }
+}
