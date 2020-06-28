@@ -62,11 +62,20 @@ export default class BurgerBuilder extends Component {
         this.setState({ parchasing: false });
     }
 
+    continueHandler = (e) => {
+        console.log("Hei!")
+    }
+
     render() {
         return (
             <Aux>
                 <Modal show={this.state.parchasing} closeHandler={this.purchaseCancel}>
-                    <OrderSummary ingredients={this.state.ingredients} closeHandler={this.purchaseCancel} />
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        closeHandler={this.purchaseCancel}
+                        totalPrice={this.state.totalPrice}
+                        parchaseContinueHandler={this.continueHandler}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BurgerControls

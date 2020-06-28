@@ -1,6 +1,7 @@
 import React from 'react';
 import Aux from '../../../hoc/Auxiliary';
 import classes from '../OrderSummary/ordersumarry.module.css';
+import Button from '../../UI/Button/Button';
 
 export default function OrderSumarry(props) {
     let ingredientsList = Object.keys(props.ingredients).map(ingredient => {
@@ -16,8 +17,10 @@ export default function OrderSumarry(props) {
             <ul className={classes.IngredientsUL}>
                 {ingredientsList}
             </ul>
+            <p>Total Price: {props.totalPrice}</p>
             <p>Procced to checkout?</p>
-            <button className={classes.CloseButton} onClick={props.closeHandler}>Close</button>
+            <Button btnType="Danger" clicked={props.closeHandler}>Close</Button>
+            <Button btnType="Success" clicked={props.parchaseContinueHandler}>Continue</Button>
         </Aux>
     )
 }
