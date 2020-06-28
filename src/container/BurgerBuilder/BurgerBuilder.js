@@ -22,7 +22,8 @@ export default class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchaseable: false
+        purchaseable: false,
+        parchasing: false
     }
 
     updatePurchaseableHandler(ingredients) {
@@ -53,10 +54,14 @@ export default class BurgerBuilder extends Component {
         this.updatePurchaseableHandler(updatedIngredients);
     };
 
+    purchaseHandler = () => {
+        this.setState({ parchasing: true })
+    }
+
     render() {
         return (
             <Aux>
-                <Modal>
+                <Modal show={this.state.parchasing}>
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
@@ -66,6 +71,7 @@ export default class BurgerBuilder extends Component {
                     disabled={this.state.ingredients}
                     priceAmount={this.state.totalPrice}
                     purchaseable={this.state.purchaseable}
+                    ordered={this.purchaseHandler}
                 />
             </Aux>
         )

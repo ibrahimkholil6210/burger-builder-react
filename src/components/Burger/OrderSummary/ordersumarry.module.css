@@ -1,0 +1,11 @@
+.IngredientsUL{
+    padding: 0;
+}
+
+.IngredientList{
+    display: flex;
+}
+
+.IngredientListSpan{
+    flex-basis: 15%;
+}
