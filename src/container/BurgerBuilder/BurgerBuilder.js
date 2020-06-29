@@ -25,6 +25,9 @@ export default class BurgerBuilder extends Component {
         totalPrice: 4,
         parchaseable: false,
         parchasing: false,
+        UI: {
+            sendingData: false
+        }
     }
 
     updatePurchaseableHandler(ingredients) {
@@ -64,6 +67,11 @@ export default class BurgerBuilder extends Component {
     }
 
     continueHandler = async (e) => {
+        this.setState({
+            UI: {
+                sendingData: true,
+            }
+        })
         const dataToSendObj = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -80,6 +88,11 @@ export default class BurgerBuilder extends Component {
         };
 
         const makingHTTPreq = await axios.post('/order.json', dataToSendObj);
+        this.setState({
+            UI: {
+                sendingData: false,
+            }
+        })
         console.log(makingHTTPreq);
     }
 
@@ -92,6 +105,7 @@ export default class BurgerBuilder extends Component {
                         closeHandler={this.purchaseCancel}
                         totalPrice={this.state.totalPrice}
                         parchaseContinueHandler={this.continueHandler}
+                        isSending={this.state.UI.sendingData}
                     />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
