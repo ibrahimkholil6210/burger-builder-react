@@ -1,17 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import classes from '../OrderSummary/ordersumarry.module.css';
 import Button from '../../UI/Button/Button';
 import LoadingAnimatedImage from '../../../assets/images/Infinity-1s-200px.gif';
 
 export default function OrderSumarry(props) {
-
-    useEffect(() => {
-        console.log('[Ordersumarry.js] got triggered!');
-        return () => {
-            console.log('[Ordersumarry.js] clean up triggered!');
-        }
-    }, [])
 
     let ingredientsList = Object.keys(props.ingredients).map(ingredient => {
         return <li key={ingredient} className={classes.IngredientList}>
