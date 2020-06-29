@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSumarry';
+import axios from '../../axios-order';
 
 const INGREDIENTS_PRICE = {
     salad: .5,
@@ -23,7 +24,7 @@ export default class BurgerBuilder extends Component {
         },
         totalPrice: 4,
         parchaseable: false,
-        parchasing: false
+        parchasing: false,
     }
 
     updatePurchaseableHandler(ingredients) {
@@ -62,8 +63,24 @@ export default class BurgerBuilder extends Component {
         this.setState({ parchasing: false });
     }
 
-    continueHandler = (e) => {
-        console.log("Hei!")
+    continueHandler = async (e) => {
+        const dataToSendObj = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Ibrahim',
+                address: {
+                    street: 'Raipara court',
+                    city: 'Rajshahi',
+                    country: 'Bangladesh'
+                },
+                email: 'test@gmail.com',
+                phone: '+8801756658796'
+            }
+        };
+
+        const makingHTTPreq = await axios.post('/order.json', dataToSendObj);
+        console.log(makingHTTPreq);
     }
 
     render() {
