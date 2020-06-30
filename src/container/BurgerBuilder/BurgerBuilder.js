@@ -5,6 +5,7 @@ import BurgerControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSumarry';
 import axios from '../../axios-order';
+import WithErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENTS_PRICE = {
     salad: .5,
@@ -13,7 +14,7 @@ const INGREDIENTS_PRICE = {
     meat: 1
 }
 
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
 
     state = {
         ingredients: {
@@ -87,13 +88,13 @@ export default class BurgerBuilder extends Component {
             }
         };
 
-        const makingHTTPreq = await axios.post('/order.json', dataToSendObj);
+        await axios.post('/order.json', dataToSendObj);
         this.setState({
             UI: {
                 sendingData: false,
-            }
+            },
+            parchasing: false
         })
-        console.log(makingHTTPreq);
     }
 
     render() {
@@ -121,3 +122,5 @@ export default class BurgerBuilder extends Component {
         )
     }
 }
+
+export default WithErrorHandler(BurgerBuilder, axios);
