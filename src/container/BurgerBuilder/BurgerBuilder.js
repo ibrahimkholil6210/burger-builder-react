@@ -51,7 +51,8 @@ class BurgerBuilder extends Component {
             ...this.state.ingredients,
             [type]: this.state.ingredients[type] + 1
         };
-        const pricing = this.state.totalPrice + INGREDIENTS_PRICE[type];
+        const priceDetermine = typeof INGREDIENTS_PRICE[type] === 'string' ? parseFloat(INGREDIENTS_PRICE[type]) : INGREDIENTS_PRICE[type];
+        const pricing = this.state.totalPrice + priceDetermine;
         this.setState({ ingredients: updatedIngredients, totalPrice: pricing });
         this.updatePurchaseableHandler(updatedIngredients);
     }
@@ -61,7 +62,8 @@ class BurgerBuilder extends Component {
             ...this.state.ingredients,
             [type]: this.state.ingredients[type] - 1
         };
-        const pricing = this.state.totalPrice - INGREDIENTS_PRICE[type];
+        const priceDetermine = typeof INGREDIENTS_PRICE[type] === 'string' ? parseFloat(INGREDIENTS_PRICE[type]) : INGREDIENTS_PRICE[type];
+        const pricing = this.state.totalPrice - priceDetermine;
         this.setState({ ingredients: updatedIngredients, totalPrice: pricing });
         this.updatePurchaseableHandler(updatedIngredients);
     };
