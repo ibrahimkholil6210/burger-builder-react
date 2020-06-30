@@ -7,12 +7,6 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSumarry';
 import axios from '../../axios-order';
 import WithErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-// const INGREDIENTS_PRICE = {
-//     salad: .5,
-//     bacon: 2,
-//     cheese: 2,
-//     meat: 1
-// }
 
 let INGREDIENTS_PRICE = null;
 
