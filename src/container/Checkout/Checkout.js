@@ -5,15 +5,10 @@ import { Route } from 'react-router-dom';
 
 export default class Checkout extends Component {
     state = {
-        ingredients: {
-            salad: 1,
-            meat: 1,
-            cheese: 1,
-            bacon: 1
-        }
+        ingredients: null
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const query = new URLSearchParams(this.props.location.search);
         const ingredients = {};
         for (const [key, val] of query.entries()) {
@@ -34,7 +29,7 @@ export default class Checkout extends Component {
         return (
             <div>
                 <CheckoutSummary ingredients={this.state.ingredients} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} />
-                <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
+                <Route path={this.props.match.path + '/contact-data'} render={() => <ContactData ingredients={this.state.ingredients} />} />
             </div>
         )
     }

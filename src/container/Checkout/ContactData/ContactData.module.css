@@ -2,6 +2,9 @@
     margin: 20px auto;
     width: 80%;
     text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 2px #ccc;
 }
 
 @media (min-width: 600px) {
@@ -11,9 +14,15 @@
 }
 
 .ContactData .Form{
-    border: 2px solid #a7a7a7;
+    border: 2px solid #eee;
     width: 280px;
     height: 35px;
     margin-bottom: 15px;
     padding: 0 15px;
+}
+
+.ContactData .Form:focus{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #eee;
 }
