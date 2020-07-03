@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-order';
+import LoadingAnimatedImage from '../../../assets/images/Infinity-1s-200px.gif';
 
 export default class ContactData extends Component {
     state = {
@@ -47,30 +48,41 @@ export default class ContactData extends Component {
         await axios.post('/order.json', dataToSendObj);
         this.setState({
             sendingData: false
-        })
+        });
+        this.props.history.push('/');
     }
 
     render() {
         return (
             <div className={classes.ContactData}>
-                <h4>Enter your Contact Data</h4>
-                <form>
-                    <div>
-                        <input type="text" name="name" placeholder="Your Name!" className={classes.Form} autoComplete="off" />
-                    </div>
-                    <div>
-                        <input type="text" name="email" placeholder="Your Email!" className={classes.Form} autoComplete="off" />
-                    </div>
-                    <div>
-                        <input type="text" name="street" placeholder="Your Street!" className={classes.Form} autoComplete="off" />
-                    </div>
-                    <div>
-                        <input type="text" name="postal" placeholder="Your Postal!" className={classes.Form} autoComplete="off" />
-                    </div>
-                    <div>
-                        <Button btnType="Success" clicked={this.orederBtnHandler}>ORDER</Button>
-                    </div>
-                </form>
+                {!this.state.sendingData ? (
+                    <>
+                        <h4>Enter your Contact Data</h4>
+                        <form>
+                            <div>
+                                <input type="text" name="name" placeholder="Your Name!" className={classes.Form} autoComplete="off" />
+                            </div>
+                            <div>
+                                <input type="text" name="email" placeholder="Your Email!" className={classes.Form} autoComplete="off" />
+                            </div>
+                            <div>
+                                <input type="text" name="street" placeholder="Your Street!" className={classes.Form} autoComplete="off" />
+                            </div>
+                            <div>
+                                <input type="text" name="postal" placeholder="Your Postal!" className={classes.Form} autoComplete="off" />
+                            </div>
+                            <div>
+                                <Button btnType="Success" clicked={this.orederBtnHandler}>ORDER</Button>
+                            </div>
+                        </form>
+                    </>
+                ) : (
+                        <div className={classes.AnimationWrapper}>
+                            <img src={LoadingAnimatedImage} alt="Loading" />
+                        </div>
+                    )}
+
+
             </div>
         )
     }

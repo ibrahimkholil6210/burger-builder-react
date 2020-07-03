@@ -2,7 +2,6 @@ import React from 'react';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import classes from '../OrderSummary/ordersumarry.module.css';
 import Button from '../../UI/Button/Button';
-import LoadingAnimatedImage from '../../../assets/images/Infinity-1s-200px.gif';
 
 export default function OrderSumarry(props) {
 
@@ -14,24 +13,17 @@ export default function OrderSumarry(props) {
 
     return (
         <Aux>
-            {!props.isSending ? (
-                <>
-                    <h2>Your Order!</h2>
-                    <p>A delecious order with following ingredients:</p>
-                    <ul className={classes.IngredientsUL}>
-                        {ingredientsList}
-                    </ul>
-                    <p><strong>Total Price:</strong> {props.totalPrice}</p>
-                    <p>Procced to checkout?</p>
-                    <Button btnType="Danger" clicked={props.closeHandler}>Close</Button>
-                    <Button btnType="Success" clicked={props.parchaseContinueHandler}>Continue</Button>
-                </>
-            ) : (
-                    <div className={classes.AnimationWrapper}>
-                        <img src={LoadingAnimatedImage} alt="Loading" />
-                    </div>
-                )
-            }
+            <>
+                <h2>Your Order!</h2>
+                <p>A delecious order with following ingredients:</p>
+                <ul className={classes.IngredientsUL}>
+                    {ingredientsList}
+                </ul>
+                <p><strong>Total Price:</strong> {props.totalPrice}</p>
+                <p>Procced to checkout?</p>
+                <Button btnType="Danger" clicked={props.closeHandler}>Close</Button>
+                <Button btnType="Success" clicked={props.parchaseContinueHandler}>Continue</Button>
+            </>
         </Aux >
     )
 }
