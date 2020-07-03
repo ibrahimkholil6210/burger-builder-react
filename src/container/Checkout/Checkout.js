@@ -10,10 +10,28 @@ export default class Checkout extends Component {
             bacon: 1
         }
     }
+
+    componentDidMount() {
+        const query = new URLSearchParams(this.props.location.search);
+        const ingredients = {};
+        for (const [key, val] of query.entries()) {
+            ingredients[key] = parseInt(val);
+        }
+        this.setState({ ingredients });
+    }
+
+    checkoutCancel = () => {
+        this.props.history.goBack();
+    }
+
+    checkConfirm = () => {
+        this.props.history.replace('/checkout/contact-data');
+    }
+
     render() {
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients} />
+                <CheckoutSummary ingredients={this.state.ingredients} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} />
             </div>
         )
     }
