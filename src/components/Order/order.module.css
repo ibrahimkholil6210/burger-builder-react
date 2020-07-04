@@ -6,3 +6,11 @@
     margin: 10px auto;
     box-sizing: border-box;
 }
+
+.IngredientTag{
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 4px;
+    margin: 0 8px;
+    text-transform: capitalize;
+}
