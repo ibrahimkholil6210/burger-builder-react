@@ -28,7 +28,7 @@ export default class Checkout extends Component {
     render() {
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} />
+                <CheckoutSummary ingredients={this.state.ingredients} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} {...this.props} />
                 <Route path={this.props.match.path + '/contact-data'} render={(props) => <ContactData ingredients={this.state.ingredients} {...props} />} />
             </div>
         )

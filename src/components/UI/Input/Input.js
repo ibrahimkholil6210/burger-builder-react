@@ -5,7 +5,7 @@ export default function Input(props) {
     let inputElement = null;
     const styleClasses = [classes.InputElement];
 
-    if (!props.isValid && props.validationRequired) {
+    if (!props.isValid && props.validationRequired && props.isTouched) {
         styleClasses.push(classes.Invalid)
     }
 
