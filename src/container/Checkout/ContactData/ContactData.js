@@ -91,6 +91,21 @@ export default class ContactData extends Component {
         this.props.history.push('/');
     }
 
+    inputChangedHandler = (e, targetElement) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+
+        const updatedFromElement = {
+            ...updatedOrderForm[targetElement]
+        };
+
+        updatedFromElement.value = e.target.value;
+        updatedOrderForm[targetElement] = updatedFromElement;
+        this.setState({ orderForm: updatedOrderForm });
+        console.log(this.state.orderForm)
+    }
+
     render() {
         const FormElementsArray = [];
         for (let key in this.state.orderForm) {
@@ -112,7 +127,8 @@ export default class ContactData extends Component {
                                         elementType={FormElement.config.elementType}
                                         elementConfig={FormElement.config.elementConfig}
                                         value={FormElement.config.value}
-                                        key={index} />
+                                        key={index}
+                                        changed={(e) => this.inputChangedHandler(e, FormElement.id)} />
                                 })}
                             </div>
                             <div>
