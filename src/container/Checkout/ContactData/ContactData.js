@@ -139,7 +139,6 @@ export default class ContactData extends Component {
         updatedFromElement.valid = this.checkValidation(updatedFromElement.value, updatedFromElement.validation);
         updatedFromElement.touched = true;
         updatedOrderForm[targetElement] = updatedFromElement;
-        console.log(updatedOrderForm)
         let formIsValid = true;
         for (let key in updatedOrderForm) {
             formIsValid = updatedOrderForm[key].valid && formIsValid;
