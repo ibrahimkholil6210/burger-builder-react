@@ -66,22 +66,19 @@ export default class ContactData extends Component {
         this.setState({ totalPrice: this.state.totalPrice + price, ingredients: this.props.ingredients })
     }
 
-    orederBtnHandler = async (e) => {
+    orderHandler = async (e) => {
         e.preventDefault();
         this.setState({
             sendingData: true
-        })
+        });
+        const formData = {};
+        for (let key in this.state.orderForm) {
+            formData[key] = this.state.orderForm[key].value;
+        }
         const dataToSendObj = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
-            customer: {
-                name: 'Ibrahim',
-                address: {
-                    street: 'Raipara court',
-                    postalCode: '6002',
-                },
-                email: 'test@gmail.com'
-            }
+            customer: formData
         };
 
         await axios.post('/order.json', dataToSendObj);
@@ -103,7 +100,6 @@ export default class ContactData extends Component {
         updatedFromElement.value = e.target.value;
         updatedOrderForm[targetElement] = updatedFromElement;
         this.setState({ orderForm: updatedOrderForm });
-        console.log(this.state.orderForm)
     }
 
     render() {
@@ -120,7 +116,7 @@ export default class ContactData extends Component {
                 {!this.state.sendingData ? (
                     <>
                         <h4>Enter your Contact Data</h4>
-                        <form>
+                        <form onSubmit={this.orderHandler}>
                             <div>
                                 {FormElementsArray.map((FormElement, index) => {
                                     return <Input
@@ -132,7 +128,7 @@ export default class ContactData extends Component {
                                 })}
                             </div>
                             <div>
-                                <Button btnType="Success" clicked={this.orederBtnHandler}>ORDER</Button>
+                                <Button btnType="Success">ORDER</Button>
                             </div>
                         </form>
                     </>
