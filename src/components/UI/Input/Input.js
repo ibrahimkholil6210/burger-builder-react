@@ -15,7 +15,7 @@ export default function Input(props) {
             break
         case ('select'):
             inputElement = (
-                <select className={styleClasses.join(' ')} onChange={props.changed}>
+                <select className={styleClasses[0]} onChange={props.changed}>
                     {props.elementConfig.options.map((option, index) => {
                         return <option key={index} value={option.value}>{option.displayValue}</option>
                     })}

@@ -69,8 +69,9 @@ export default class ContactData extends Component {
                         { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
-                value: '',
-                valid: true
+                value: 'fastest',
+                valid: true,
+                validation: {}
             }
         },
         sendingData: false,
@@ -138,6 +139,7 @@ export default class ContactData extends Component {
         updatedFromElement.valid = this.checkValidation(updatedFromElement.value, updatedFromElement.validation);
         updatedFromElement.touched = true;
         updatedOrderForm[targetElement] = updatedFromElement;
+        console.log(updatedOrderForm)
         let formIsValid = true;
         for (let key in updatedOrderForm) {
             formIsValid = updatedOrderForm[key].valid && formIsValid;
