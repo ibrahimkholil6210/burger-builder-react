@@ -13,20 +13,6 @@
     }
 }
 
-.ContactData .Form{
-    border: 2px solid #eee;
-    width: 280px;
-    height: 35px;
-    margin-bottom: 15px;
-    padding: 0 15px;
-}
-
-.ContactData .Form:focus{
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #eee;
-}
-
 .AnimationWrapper{
     display: flex;
     width: 100%;
