@@ -14,7 +14,11 @@ export default class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -22,7 +26,11 @@ export default class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your email?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             street: {
                 elementType: 'input',
@@ -30,7 +38,11 @@ export default class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Street?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             postalCode: {
                 elementType: 'input',
@@ -38,7 +50,11 @@ export default class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Zip Code?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -88,6 +104,15 @@ export default class ContactData extends Component {
         this.props.history.push('/');
     }
 
+    checkValidation = (value, rule) => {
+        let validity = false;
+
+        if (rule.required) {
+            validity = value.trim() !== '';
+        }
+        return validity;
+    }
+
     inputChangedHandler = (e, targetElement) => {
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -98,6 +123,7 @@ export default class ContactData extends Component {
         };
 
         updatedFromElement.value = e.target.value;
+        updatedFromElement.valid = this.checkValidation(updatedFromElement.value, updatedFromElement.validation);
         updatedOrderForm[targetElement] = updatedFromElement;
         this.setState({ orderForm: updatedOrderForm });
     }
@@ -124,7 +150,10 @@ export default class ContactData extends Component {
                                         elementConfig={FormElement.config.elementConfig}
                                         value={FormElement.config.value}
                                         key={index}
-                                        changed={(e) => this.inputChangedHandler(e, FormElement.id)} />
+                                        changed={(e) => this.inputChangedHandler(e, FormElement.id)}
+                                        isValid={FormElement.config.valid}
+                                        validationRequired={FormElement.config.validation}
+                                    />
                                 })}
                             </div>
                             <div>

@@ -3,13 +3,19 @@ import classes from './input.module.css';
 
 export default function Input(props) {
     let inputElement = null;
+    const styleClasses = [classes.InputElement];
+
+    if (!props.isValid && props.validationRequired) {
+        styleClasses.push(classes.Invalid)
+    }
+
     switch (props.elementType) {
         case ('input'):
-            inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value} onChange={props.changed} />;
+            inputElement = <input className={styleClasses.join(' ')} {...props.elementConfig} value={props.value} onChange={props.changed} />;
             break
         case ('select'):
             inputElement = (
-                <select className={classes.InputElement} onChange={props.changed}>
+                <select className={styleClasses.join(' ')} onChange={props.changed}>
                     {props.elementConfig.options.map((option, index) => {
                         return <option key={index} value={option.value}>{option.displayValue}</option>
                     })}
@@ -17,7 +23,7 @@ export default function Input(props) {
             );
             break
         default:
-            inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value} onChange={props.changed} />;
+            inputElement = <input className={styleClasses.join(' ')} {...props.elementConfig} value={props.value} onChange={props.changed} />;
     }
     return (
         <div className={classes.Input}>

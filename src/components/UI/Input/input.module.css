@@ -10,7 +10,7 @@
     margin-bottom: 8px;
 }
 
-.Input .InputElement{
+.InputElement{
     border: 2px solid #eee;
     width: 280px;
     height: 35px;
@@ -18,7 +18,12 @@
     transition: .35s;
 }
 
-.Input .InputElement:focus{
+.InputElement:focus{
     outline: none;
     border: 2px solid rgb(83, 83, 83);
+}
+
+.Invalid{
+    border-color: red;
+    background-color: salmon;
 }
