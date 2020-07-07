@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-order';
@@ -6,7 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 import CheckError from '../../../hoc/checkError/checkError';
 import LoadingAnimatedImage from '../../../assets/images/Infinity-1s-200px.gif';
 
-export default class ContactData extends Component {
+class ContactData extends Component {
     state = {
         orderForm: {
             name: {
@@ -75,20 +76,9 @@ export default class ContactData extends Component {
             }
         },
         sendingData: false,
-        totalPrice: 4,
         formIsValid: false
     }
 
-    async componentDidMount() {
-        const priceObj = await axios.get('https://burger-builder-8b7b4.firebaseio.com/ingredientsPrice.json');
-        const data = priceObj.data;
-        let price = 0;
-        for (const key in data) {
-            let calc = this.props.ingredients[key] * data[key];
-            price += calc;
-        }
-        this.setState({ totalPrice: this.state.totalPrice + price, ingredients: this.props.ingredients })
-    }
 
     orderHandler = async (e) => {
         e.preventDefault();
@@ -96,17 +86,13 @@ export default class ContactData extends Component {
             sendingData: true
         });
 
-        if (Object.keys(this.state.ingredients).length === 0) {
-
-        }
-
         const formData = {};
         for (let key in this.state.orderForm) {
             formData[key] = this.state.orderForm[key].value;
         }
         const dataToSendObj = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
+            ingredients: this.props.ings,
+            price: this.props.price,
             customer: formData
         };
 
@@ -154,9 +140,8 @@ export default class ContactData extends Component {
                 config: this.state.orderForm[key]
             });
         }
-
         return (
-            <CheckError ingredients={this.props.ingredients} {...this.props}>
+            <CheckError ingredients={this.props.ings} {...this.props}>
                 <div className={classes.ContactData}>
                     {!this.state.sendingData ? (
                         <>
@@ -193,3 +178,12 @@ export default class ContactData extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

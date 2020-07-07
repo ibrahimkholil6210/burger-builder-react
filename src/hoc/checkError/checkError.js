@@ -1,29 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Modal from '../../components/UI/Modal/Modal';
 import Aux from '../Auxiliary/Auxiliary';
 
 class CheckError extends Component {
-    state = {
-        ingredients: this.props.ingredients,
-        error: null,
-    }
-
-    componentWillMount() {
-        if (Object.keys(this.state.ingredients).length === 0) {
-            this.setState({ error: true });
-        }
-    }
 
     closeHandler = () => {
-        this.setState({ error: null });
         this.props.history.push('/');
     }
 
     render() {
         return (
             <Aux>
-                <Modal show={this.state.error} closeHandler={this.closeHandler}>
-                    {this.state.error ? (<p>No ingredients selected!</p>) : null}
+                <Modal show={this.props.price === 4 ? true : false} closeHandler={this.closeHandler}>
+                    <p>No ingredients selected!</p>
                 </Modal>
                 {this.props.children}
             </Aux>
@@ -31,4 +21,11 @@ class CheckError extends Component {
     }
 };
 
-export default CheckError;
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(CheckError);
