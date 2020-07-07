@@ -12,7 +12,7 @@ const control = [
 export default function BuildControls(props) {
     return (
         <div className={classes.BuildControls}>
-            <p>Total Price: <strong>{props.priceAmount}</strong></p>
+            <p>Total Price: $<strong>{props.priceAmount}</strong></p>
             {control.map(con => (
                 <BuildControl
                     key={con.label}
