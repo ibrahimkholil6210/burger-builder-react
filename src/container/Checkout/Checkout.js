@@ -3,6 +3,7 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './ContactData/ContactData';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import CheckError from '../../hoc/checkError/checkError';
 
 class Checkout extends Component {
 
@@ -16,18 +17,22 @@ class Checkout extends Component {
 
     render() {
         return (
-            <div>
-                <CheckoutSummary ingredients={this.props.ings} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} {...this.props} />
-                <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
-            </div>
+            <CheckError ingredients={this.props.ings} {...this.props}>
+                {this.props.price > 4 ? (
+                    <>
+                        <CheckoutSummary ingredients={this.props.ings} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} {...this.props} />
+                        <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
+                    </>
+                ) : null}
+            </CheckError>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice
     }
 }
 

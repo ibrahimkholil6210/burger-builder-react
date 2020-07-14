@@ -4,8 +4,9 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-order';
 import Input from '../../../components/UI/Input/Input';
-import CheckError from '../../../hoc/checkError/checkError';
 import LoadingAnimatedImage from '../../../assets/images/Infinity-1s-200px.gif';
+import WithErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
     state = {
@@ -75,16 +76,12 @@ class ContactData extends Component {
                 validation: {}
             }
         },
-        sendingData: false,
         formIsValid: false
     }
 
 
     orderHandler = async (e) => {
         e.preventDefault();
-        this.setState({
-            sendingData: true
-        });
 
         const formData = {};
         for (let key in this.state.orderForm) {
@@ -96,10 +93,8 @@ class ContactData extends Component {
             customer: formData
         };
 
-        await axios.post('/order.json', dataToSendObj);
-        this.setState({
-            sendingData: false
-        });
+        this.props.onOrderBurger(dataToSendObj);
+
         this.props.history.push('/');
     }
 
@@ -141,49 +136,54 @@ class ContactData extends Component {
             });
         }
         return (
-            <CheckError ingredients={this.props.ings} {...this.props}>
-                <div className={classes.ContactData}>
-                    {!this.state.sendingData ? (
-                        <>
-                            <h4>Enter your Contact Data</h4>
-                            <form onSubmit={this.orderHandler}>
-                                <div>
-                                    {FormElementsArray.map((FormElement, index) => {
-                                        return <Input
-                                            elementType={FormElement.config.elementType}
-                                            elementConfig={FormElement.config.elementConfig}
-                                            value={FormElement.config.value}
-                                            key={index}
-                                            changed={(e) => this.inputChangedHandler(e, FormElement.id)}
-                                            isValid={FormElement.config.valid}
-                                            validationRequired={FormElement.config.validation}
-                                            isTouched={FormElement.config.touched}
-                                        />
-                                    })}
-                                </div>
-                                <div>
-                                    <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
-                                </div>
-                            </form>
-                        </>
-                    ) : (
-                            <div className={classes.AnimationWrapper}>
-                                <img src={LoadingAnimatedImage} alt="Loading" />
+            <div className={classes.ContactData}>
+                {!this.props.loading ? (
+                    <>
+                        <h4>Enter your Contact Data</h4>
+                        <form onSubmit={this.orderHandler}>
+                            <div>
+                                {FormElementsArray.map((FormElement, index) => {
+                                    return <Input
+                                        elementType={FormElement.config.elementType}
+                                        elementConfig={FormElement.config.elementConfig}
+                                        value={FormElement.config.value}
+                                        key={index}
+                                        changed={(e) => this.inputChangedHandler(e, FormElement.id)}
+                                        isValid={FormElement.config.valid}
+                                        validationRequired={FormElement.config.validation}
+                                        isTouched={FormElement.config.touched}
+                                    />
+                                })}
                             </div>
-                        )}
+                            <div>
+                                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
+                            </div>
+                        </form>
+                    </>
+                ) : (
+                        <div className={classes.AnimationWrapper}>
+                            <img src={LoadingAnimatedImage} alt="Loading" />
+                        </div>
+                    )}
 
 
-                </div>
-            </CheckError>
+            </div>
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithErrorHandler(ContactData, axios));

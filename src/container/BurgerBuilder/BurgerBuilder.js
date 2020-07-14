@@ -8,9 +8,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSumarry';
 import axios from '../../axios-order';
 import WithErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-
-
-
+import LoadingAnimatedImage from '../../assets/images/Infinity-1s-200px.gif';
+import classes from './burgerBuilder.module.css';
 
 class BurgerBuilder extends Component {
 
@@ -19,6 +18,10 @@ class BurgerBuilder extends Component {
         UI: {
             sendingData: false
         }
+    }
+
+    componentDidMount() {
+        this.props.onInitIngredients();
     }
 
 
@@ -47,34 +50,55 @@ class BurgerBuilder extends Component {
     }
 
     render() {
+        let Layout = null;
+        if (this.props.error) {
+            Layout = (
+                <p>Problem While Fetching data</p>
+            )
+        } else {
+            Layout = (
+                <>
+                    <Modal show={this.state.parchasing} closeHandler={this.purchaseCancel}>
+                        <OrderSummary
+                            ingredients={this.props.ings}
+                            closeHandler={this.purchaseCancel}
+                            totalPrice={this.props.price}
+                            parchaseContinueHandler={this.continueHandler}
+                        />
+                    </Modal>
+                    <Burger ingredients={this.props.ings} />
+                    <BurgerControls
+                        addIngredient={this.props.onIngredientAdded}
+                        decreaseIngredient={this.props.onIngredientRemoved}
+                        disabled={this.props.ings}
+                        priceAmount={this.props.price}
+                        parchaseable={this.updatePurchaseableHandler(this.props.ings)}
+                        ordered={this.purchaseHandler}
+                    />
+                </>
+            )
+        }
         return (
             <Aux>
-                <Modal show={this.state.parchasing} closeHandler={this.purchaseCancel}>
-                    <OrderSummary
-                        ingredients={this.props.ings}
-                        closeHandler={this.purchaseCancel}
-                        totalPrice={this.props.price}
-                        parchaseContinueHandler={this.continueHandler}
-                    />
-                </Modal>
-                <Burger ingredients={this.props.ings} />
-                <BurgerControls
-                    addIngredient={this.props.onIngredientAdded}
-                    decreaseIngredient={this.props.onIngredientRemoved}
-                    disabled={this.props.ings}
-                    priceAmount={this.props.price}
-                    parchaseable={this.updatePurchaseableHandler(this.props.ings)}
-                    ordered={this.purchaseHandler}
-                />
+                {this.props.ings === null && this.props.error === false ? (
+                    <div className={classes.AnimationWrapper}>
+                        <img src={LoadingAnimatedImage} alt="Loading" />
+                    </div>
+                ) : (
+                        Layout
+                    )}
+
             </Aux>
+
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     }
 }
 
@@ -82,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onIngredientAdded: (igName) => dispatch(actionType.addIngredient(igName)),
         onIngredientRemoved: (igName) => dispatch(actionType.removeIngredient(igName)),
+        onInitIngredients: () => dispatch(actionType.initIngredient())
     }
 }
 
