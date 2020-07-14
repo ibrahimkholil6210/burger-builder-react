@@ -94,8 +94,6 @@ class ContactData extends Component {
         };
 
         this.props.onOrderBurger(dataToSendObj);
-
-        this.props.history.push('/');
     }
 
     checkValidation = (value, rule) => {
