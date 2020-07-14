@@ -14,7 +14,6 @@ class Orders extends Component {
     }
 
     render() {
-        console.log(this.props)
         let Layout = null;
         if (this.props.orders.length > 0) {
             Layout = (
