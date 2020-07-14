@@ -34,6 +34,22 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 purchased: false
             }
+        case actionTypes.FETCH_ORDERS_INIT:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.FETCH_ORDERS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                orders: action.payload.orders
+            }
+        case actionTypes.FETCH_INGREDIENTS_FAILED:
+            return {
+                ...state,
+                loading: false
+            }
         default:
             return state;
     }

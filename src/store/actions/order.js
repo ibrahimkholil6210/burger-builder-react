@@ -44,3 +44,47 @@ export const purchseInit = () => {
         type: actionTypes.PURCHASE_INIT
     }
 }
+
+export const fetchOrdersSucccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        payload: {
+            orders: orders
+        }
+    }
+}
+
+export const fetchOrdersFailed = (error) => {
+    return {
+        type: actionTypes.FETCH_INGREDIENTS_FAILED,
+        payload: {
+            error: error
+        }
+    }
+}
+
+export const fetchOrdersStart = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_INIT,
+    }
+}
+
+
+export const fetchOrders = () => {
+    return async dispatch => {
+        dispatch(fetchOrdersStart());
+        try {
+            const orders = await axios.get('https://burger-builder-8b7b4.firebaseio.com/order.json');
+            const fetchData = [];
+            for (let key in orders.data) {
+                fetchData.push({
+                    ...orders.data[key],
+                    id: key
+                });
+            }
+            dispatch(fetchOrdersSucccess(fetchData));
+        } catch (err) {
+            dispatch(fetchOrdersFailed(err));
+        }
+    }
+}
