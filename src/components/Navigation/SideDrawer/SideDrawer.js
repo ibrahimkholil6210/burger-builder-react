@@ -18,7 +18,7 @@ export default function SindeDrawer(props) {
                     <Logo />
                 </div>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems isAuthenticated={props.isAuth} />
                 </nav>
             </div>
         </Aux>

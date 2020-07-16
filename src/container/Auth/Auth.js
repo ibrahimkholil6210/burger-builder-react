@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './auth.module.css';
@@ -115,7 +116,7 @@ class Auth extends Component {
             notify(this.props.error);
         }
 
-        return (
+        return this.props.isAuthenticated ? <Redirect to="/" /> : (
             <div className={classes.ContactData}>
                 <h4>Authenticate!</h4>
                 {this.props.loading ? (
@@ -133,14 +134,15 @@ class Auth extends Component {
                     )}
                 <ToastContainer />
             </div>
-        );
+        )
     }
 }
 
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null
     }
 }
 

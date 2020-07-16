@@ -10,7 +10,7 @@ export default function Toolbar(props) {
             <Drawertoggler clicked={props.drawerToggleHandler} />
             <Logo />
             <nav className={[classes.DesktopOnly].join(' ')}>
-                <NavigationItems />
+                <NavigationItems isAuthenticated={props.isAuth} />
             </nav>
         </header>
     )

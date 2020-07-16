@@ -10,5 +10,6 @@ export {
 } from './order';
 export {
     auth,
-    authErrorReset
+    authErrorReset,
+    logout
 } from './auth'
