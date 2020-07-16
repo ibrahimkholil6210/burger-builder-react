@@ -47,3 +47,9 @@ export const auth = (email, password, isSignup) => {
         }
     }
 }
+
+export const authErrorReset = () => {
+    return {
+        type: actionTypes.AUTH_TOAST_RESET
+    }
+}

@@ -109,7 +109,7 @@ class Auth extends Component {
                 />
             )
         })
-        const notify = (err) => toast.error(err.message);
+        const notify = (err) => toast.error(err.message, { onOpen: () => this.props.onToastClose() });
 
         if (this.props.error) {
             notify(this.props.error);
@@ -146,7 +146,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp)),
+        onToastClose: () => dispatch(actions.authErrorReset())
     }
 }
 
