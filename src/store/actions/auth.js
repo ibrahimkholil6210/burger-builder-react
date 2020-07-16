@@ -20,7 +20,7 @@ export const authFailed = (err) => {
     return {
         type: actionTypes.AUTH_FAILED,
         payload: {
-            err
+            error: err
         }
     };
 }
@@ -41,11 +41,9 @@ export const auth = (email, password, isSignup) => {
             }
 
             const sendSignUpData = await axios.post(url, authData);
-            console.log(sendSignUpData)
             dispatch(authSuccess(sendSignUpData.data));
         } catch (err) {
-            console.log(err.response)
-            dispatch(authFailed(err));
+            dispatch(authFailed(err.response));
         }
     }
 }

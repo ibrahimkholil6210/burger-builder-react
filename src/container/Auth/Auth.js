@@ -4,6 +4,9 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './auth.module.css';
 import * as actions from '../../store/actions/index';
+import LoadingAnimatedImage from '../../assets/images/Infinity-1s-200px.gif';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Auth extends Component {
     state = {
@@ -106,16 +109,38 @@ class Auth extends Component {
                 />
             )
         })
+        const notify = (err) => toast.error(err.message);
+
+        if (this.props.error) {
+            notify(this.props.error);
+        }
+
         return (
             <div className={classes.ContactData}>
                 <h4>Authenticate!</h4>
-                <form onSubmit={this.submitHandler}>
-                    {form}
-                    <Button btnType="Success"> SUBMIT</Button >
-                </form>
-                <Button btnType="Danger" clicked={this.switchAuthHandler}>{this.state.isSignUp ? 'SIGNIN' : 'SIGNUP'}</Button>
+                {this.props.loading ? (
+                    <div className={classes.AnimationWrapper}>
+                        <img src={LoadingAnimatedImage} alt="Loading" />
+                    </div>
+                ) : (
+                        <>
+                            <form onSubmit={this.submitHandler}>
+                                {form}
+                                <Button btnType="Success"> SUBMIT</Button >
+                            </form>
+                            <Button btnType="Danger" clicked={this.switchAuthHandler}>{!this.state.isSignUp ? 'SIGNIN' : 'SIGNUP'}</Button>
+                        </>
+                    )}
+                < ToastContainer />
             </div>
         );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
@@ -125,4 +150,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

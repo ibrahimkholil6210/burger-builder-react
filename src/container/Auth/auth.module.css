@@ -20,3 +20,9 @@
     justify-content: center;
     align-items: center;
 }
+
+
+
+.Toastify__error{
+    background-color: #fc6868;
+}
