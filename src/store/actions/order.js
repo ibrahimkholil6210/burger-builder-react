@@ -29,9 +29,12 @@ const purchaseBurgerStart = () => {
 
 export const purchaseBurger = (orderData) => {
     return async (dispatch, getState) => {
+        const store = getState();
+        console.log(store);
+        const authToken = store.auth.token;
         dispatch(purchaseBurgerStart());
         try {
-            const response = await axios.post('/order.json', orderData);
+            const response = await axios.post('/order.json?auth=' + authToken, orderData);
             dispatch(purchaseBugerSuccess(response.data.name, orderData))
         } catch (err) {
             dispatch(purchaseBugerFailed(err))
@@ -70,11 +73,11 @@ export const fetchOrdersStart = () => {
 }
 
 
-export const fetchOrders = () => {
+export const fetchOrders = (authToken) => {
     return async dispatch => {
         dispatch(fetchOrdersStart());
         try {
-            const orders = await axios.get('https://burger-builder-8b7b4.firebaseio.com/order.json');
+            const orders = await axios.get('/order.json?auth=' + authToken);
             const fetchData = [];
             for (let key in orders.data) {
                 fetchData.push({

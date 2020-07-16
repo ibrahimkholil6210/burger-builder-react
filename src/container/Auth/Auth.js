@@ -131,7 +131,7 @@ class Auth extends Component {
                             <Button btnType="Danger" clicked={this.switchAuthHandler}>{!this.state.isSignUp ? 'SIGNIN' : 'SIGNUP'}</Button>
                         </>
                     )}
-                < ToastContainer />
+                <ToastContainer />
             </div>
         );
     }
