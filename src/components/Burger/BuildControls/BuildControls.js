@@ -23,7 +23,7 @@ export default function BuildControls(props) {
                     type={con.type}
                 />
             ))}
-            <button className={classes.OrderButton} disabled={!props.parchaseable} onClick={props.ordered}>ORDER NOW</button>
+            <button className={classes.OrderButton} disabled={!props.parchaseable} onClick={props.ordered}>{props.isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}</button>
         </div>
     )
 }

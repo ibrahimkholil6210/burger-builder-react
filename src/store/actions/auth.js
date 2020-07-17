@@ -68,3 +68,12 @@ export const authErrorReset = () => {
         type: actionTypes.AUTH_TOAST_RESET
     }
 }
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        payload: {
+            path: path
+        }
+    }
+}
