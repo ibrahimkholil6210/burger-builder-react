@@ -7,11 +7,12 @@ export const authStart = () => {
     };
 }
 
-export const authSuccess = (authData) => {
+export const authSuccess = (idToken, localId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         payload: {
-            authData
+            idToken: idToken,
+            localId: localId
         }
     };
 }
@@ -26,6 +27,9 @@ export const authFailed = (err) => {
 }
 
 export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationTime');
+
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -54,9 +58,14 @@ export const auth = (email, password, isSignup) => {
                 url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAFfHldAZB_6IZn40Sm5tOgk-leE7NtXHQ';
             }
 
-            const sendSignUpData = await axios.post(url, authData);
-            dispatch(authSuccess(sendSignUpData.data));
-            dispatch(authCheckTimeout(sendSignUpData.data.expiresIn));
+            const getResponse = await axios.post(url, authData);
+
+            const expirationDate = new Date(new Date().getTime() + getResponse.data.expiresIn * 1000);
+            localStorage.setItem('token', getResponse.data.idToken);
+            localStorage.setItem('expirationTime', expirationDate);
+
+            dispatch(authSuccess(getResponse.data.idToken, getResponse.data.localId));
+            dispatch(authCheckTimeout(getResponse.data.expiresIn));
         } catch (err) {
             dispatch(authFailed(err.response));
         }
@@ -77,3 +86,4 @@ export const setAuthRedirectPath = (path) => {
         }
     }
 }
+
