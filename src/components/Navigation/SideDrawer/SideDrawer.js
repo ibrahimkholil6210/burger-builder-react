@@ -13,7 +13,7 @@ export default function SindeDrawer(props) {
     return (
         <Aux>
             <Backdrop show={props.showDrawer} modalClose={props.drawerToggleHandler} />
-            <div className={drawerCssToggle}>
+            <div className={drawerCssToggle} onClick={props.drawerToggleHandler}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>
