@@ -90,7 +90,8 @@ class ContactData extends Component {
         const dataToSendObj = {
             ingredients: this.props.ings,
             price: this.props.price,
-            customer: formData
+            customer: formData,
+            userId: this.props.userId
         };
 
         this.props.onOrderBurger(dataToSendObj);
@@ -174,7 +175,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        userId: state.auth.userId
     }
 }
 

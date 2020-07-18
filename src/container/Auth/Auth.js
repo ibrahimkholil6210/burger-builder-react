@@ -122,8 +122,15 @@ class Auth extends Component {
             notify(this.props.error);
         }
 
-        return this.props.isAuthenticated ? <Redirect to={this.props.authRedirectPath} /> : (
+
+        let authRedirect = null;
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to={this.props.authRedirectPath} />;
+        }
+
+        return (
             <div className={classes.ContactData}>
+                {authRedirect}
                 <h4>Authenticate!</h4>
                 {this.props.loading ? (
                     <div className={classes.AnimationWrapper}>
@@ -150,7 +157,7 @@ const mapStateToProps = state => {
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
         buildingBurger: state.burgerBuilder.building,
-        authRedirectPath: state.auth.authRedirect
+        authRedirectPath: state.auth.authRedirect,
     }
 }
 

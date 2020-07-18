@@ -30,7 +30,6 @@ const purchaseBurgerStart = () => {
 export const purchaseBurger = (orderData) => {
     return async (dispatch, getState) => {
         const store = getState();
-        console.log(store);
         const authToken = store.auth.token;
         dispatch(purchaseBurgerStart());
         try {

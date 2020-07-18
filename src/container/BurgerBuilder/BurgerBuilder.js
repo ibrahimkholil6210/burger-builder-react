@@ -58,7 +58,7 @@ class BurgerBuilder extends Component {
         let Layout = null;
         if (this.props.error) {
             Layout = (
-                <p>Problem While Fetching data</p>
+                <p style={{ textAlign: 'center' }}>Problem While Fetching data</p>
             )
         } else {
             Layout = (
