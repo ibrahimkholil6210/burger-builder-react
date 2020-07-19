@@ -27,3 +27,10 @@
     border-color: red;
     background-color: salmon;
 }
+
+@media (max-width: 500px) {
+    .InputElement{
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
