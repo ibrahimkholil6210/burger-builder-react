@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
-import ContactData from './ContactData/ContactData';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CheckError from '../../hoc/checkError/checkError';
+const ContactData = React.lazy(() => import('./ContactData/ContactData'));
 
 class Checkout extends Component {
 
@@ -27,7 +27,10 @@ class Checkout extends Component {
                         {this.props.price > 4 ? (
                             <>
                                 <CheckoutSummary ingredients={this.props.ings} checkConfirm={this.checkConfirm} checkoutCancel={this.checkoutCancel} {...this.props} />
-                                <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
+                                <Route path={this.props.match.path + '/contact-data'}
+                                    render={
+                                        () => <Suspense fallback={<div>Loading...</div>}><ContactData /></Suspense>}
+                                />
                             </>
                         ) : null}
                     </CheckError>
